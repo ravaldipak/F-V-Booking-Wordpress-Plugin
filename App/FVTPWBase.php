@@ -9,6 +9,9 @@ class FVTPWBase
     {
         add_action('init', [$this,'fvtpw_custom_post_type_registration']);
         add_action('init', [$this,'register_custom_post_status']);
+        add_action('admin_menu', [$this,'fv_booking_register_settings']);
+        add_action('admin_init', [$this,'fvtpw_register_settings']);
+        
         add_action( 'wp_enqueue_scripts', [$this,"fvtpw_car_park_booking_enqueue_scripts"] );
 
         add_action( 'wp_ajax_fvtpw_car_park_booking_submit', [$this,'fvtpw_car_park_booking_ajax_submit'] );
@@ -28,6 +31,88 @@ class FVTPWBase
 
 
 
+    }
+
+
+    public function fv_booking_register_settings(){
+        add_submenu_page(
+            'edit.php?post_type=fv_booking',
+            __( 'Settings', 'fvtpw' ),
+            __( 'Settings', 'fvtpw' ),
+            'manage_options',
+            'fvtpw_settings',
+            [$this,'fvtpw_settings_page']
+        );
+    }
+
+    public function fvtpw_settings_page(){
+        ?>
+        <div class="wrap">
+            <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+            <form method="post" action="options.php">
+                <?php
+                // Output nonce, action, and option_page fields
+                settings_fields('fvtpw_settings_group');
+                // Output the settings sections
+                do_settings_sections('fvtpw_settings_page');
+                // Submit button
+                submit_button('Save Settings');
+                ?>
+            </form>
+        </div>
+        <?php
+    }
+
+    public function fvtpw_register_settings(){
+        // Register a new settings section
+        add_settings_section('fvtpw_general_settings_section', 'General Settings', '', 'fvtpw_settings_page');
+    
+        // Add fields to the settings section
+        add_settings_field('new_booking_message', 'New Booking Message', [$this, 'new_booking_message_callback'], 'fvtpw_settings_page', 'fvtpw_general_settings_section');
+        add_settings_field('change_status_message', 'Change Status Message', [$this, 'change_status_message_callback'], 'fvtpw_settings_page', 'fvtpw_general_settings_section');
+        add_settings_field('form_button_color', 'Form Button Color', [$this, 'form_button_color_callback'], 'fvtpw_settings_page', 'fvtpw_general_settings_section');
+    
+        // Register the settings
+        register_setting('fvtpw_settings_group', 'fvtpw_settings', [$this, 'sanitize_settings']);
+    }
+    
+    public function new_booking_message_callback(){
+        // Retrieve the current value of the option
+        $options = get_option('fvtpw_settings');
+        $message = isset($options['new_booking_message']) ? esc_textarea($options['new_booking_message']) : '';
+        // Output the field
+        echo "<textarea name='fvtpw_settings[new_booking_message]' rows='5' cols='50'>$message</textarea>";
+    }
+    
+    public function change_status_message_callback(){
+        // Retrieve the current value of the option
+        $options = get_option('fvtpw_settings');
+        $message = isset($options['change_status_message']) ? esc_textarea($options['change_status_message']) : '';
+        // Output the field
+        echo "<textarea name='fvtpw_settings[change_status_message]' rows='5' cols='50'>$message</textarea>";
+    }
+    
+    public function form_button_color_callback(){
+        // Retrieve the current value of the option
+        $options = get_option('fvtpw_settings');
+        $color = isset($options['form_button_color']) ? sanitize_hex_color($options['form_button_color']) : '#0073aa';
+        // Output the field
+        echo "<input type='text' name='fvtpw_settings[form_button_color]' value='$color' class='color-field'>";
+    }
+    
+    public function sanitize_settings($input){
+        // Sanitize each setting field
+        $sanitized_input = [];
+        if (isset($input['new_booking_message'])) {
+            $sanitized_input['new_booking_message'] = wp_kses_post($input['new_booking_message']);
+        }
+        if (isset($input['change_status_message'])) {
+            $sanitized_input['change_status_message'] = wp_kses_post($input['change_status_message']);
+        }
+        if (isset($input['form_button_color'])) {
+            $sanitized_input['form_button_color'] = sanitize_hex_color($input['form_button_color']);
+        }
+        return $sanitized_input;
     }
 
     public function add_custom_status_column($columns) {
@@ -80,8 +165,6 @@ class FVTPWBase
             echo esc_html(date('h:i A', strtotime($exit_time)));
         }
     }
-    
-    
 
     public function register_custom_post_status(){
         register_post_status('complete', array(
@@ -139,7 +222,8 @@ class FVTPWBase
                 // Send email to booking user
                 $user_email = get_post_meta($post_id, 'email', true);
                 $subject = 'Booking Approved';
-                $message = "Your booking has been approved.\n\n";
+                $message = get_option('approve_booking_message', 'Your booking has been approved.');
+                $message = str_replace('{{status}}', 'Approved', $message);
                 $headers = 'From: ' . get_option('admin_email') . '\r\n';
                 wp_mail($user_email, $subject, $message, $headers);
             }
@@ -155,14 +239,12 @@ class FVTPWBase
             if ($post && $post->post_type === 'fv_booking') {
                 // Delete the post
                 $user_email = get_post_meta($post_id, 'email', true);
-
-                wp_delete_post($post_id, true);
-    
-                // Send email to booking user
                 $subject = 'Booking Denied';
-                $message = "Your booking has been denied.\n\n";
+                $message = get_option('deny_booking_message', 'Your booking has been denied.');
+                $message = str_replace('{{status}}', 'Denied', $message);
                 $headers = 'From: ' . get_option('admin_email') . '\r\n';
                 wp_mail($user_email, $subject, $message, $headers);
+                wp_delete_post($post_id, true);
             }
         }
         wp_redirect(admin_url('edit.php?post_type=fv_booking'));
@@ -182,7 +264,8 @@ class FVTPWBase
         // Send email to booking user
         $user_email = get_post_meta($post_id, 'email', true);
         $subject = 'Booking Completed';
-        $message = "Your booking has been completed.\n\n";
+        $message = get_option('complete_booking_message', 'Your booking has been completed.');
+        $message = str_replace('{{status}}', 'Completed', $message);
         $headers = 'From: ' . get_option('admin_email') . '\r\n';
         wp_mail($user_email, $subject, $message, $headers);
     
@@ -190,6 +273,7 @@ class FVTPWBase
         wp_redirect(admin_url('edit.php?post_type=fv_booking'));
         exit;
     }
+    
 
     public function fvtpw_booking_meta_box(){
         add_meta_box(
@@ -428,18 +512,19 @@ class FVTPWBase
                 update_post_meta($post_id, 'notes', $notes);
 
                 // Send email to admin
+                // Get the new booking message from options
+                $new_booking_message = get_option('fvtpw_settings')['new_booking_message'];
+
+                // Replace placeholders with actual values
+                $message = str_replace(
+                    array('{{name}}', '{{email}}', '{{phone}}', '{{start_date}}', '{{start_time}}', '{{exit_date}}', '{{exit_time}}', '{{slot}}', '{{notes}}'),
+                    array($name, $email, $phone, $start_date, $start_time, $exit_date, $exit_time, $slot, $notes),
+                    $new_booking_message
+                );
+
+                // Send email to admin
                 $admin_email = get_option('admin_email');
                 $subject = 'New Car Park Booking';
-                $message = "A new car park booking has been made.\n\n";
-                $message .= "Name: $name\n";
-                $message .= "Email: $email\n";
-                $message .= "Phone: $phone\n";
-                $message .= "Start Date: $start_date\n";
-                $message .= "Start Time: $start_time\n";
-                $message .= "Exit Date: $exit_date\n";
-                $message .= "Exit Time: $exit_time\n";
-                $message .= "Slot: $slot\n";
-                $message .= "Notes: $notes\n";
                 $headers = 'From: ' . $email . '\r\n';
 
                 wp_mail($admin_email, $subject, $message, $headers);
