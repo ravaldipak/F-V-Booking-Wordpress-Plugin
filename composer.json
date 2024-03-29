@@ -1,0 +1,17 @@
+{
+    "name": "insixus/fvtpw-plugin",
+    "description": "F&V TIR PARK & WASH",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Insixus",
+            "email": "info@insixus.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"FVTPWplugin\\": "./App"},
+        "files": [
+            "./utils/FVTPW_Helper.php"
+        ]
+    }
+}

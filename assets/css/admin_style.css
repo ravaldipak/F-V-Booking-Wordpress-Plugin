@@ -1,0 +1,582 @@
+* {
+    transition: all ease 0.5s;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button,
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    font-size: 14px;
+    color: #000 !important;
+}
+
+#get_all_users_filter label {
+    color: transparent;
+}
+
+#get_all_users_filter {
+    margin: -20px 0 20px 0;
+    width: 100%;
+}
+
+#get_all_users_filter input {
+    /* width: 56%; */
+    box-shadow: 0px 0px 5px -3px #000;
+    border-radius: 10px;
+    padding: 5px 24px;
+    background: #fff;
+    outline: none !important;
+    border: none !important;
+}
+
+.date_filter{
+    display: flex;
+    width: 85%;
+    gap:6px;
+}
+
+#get_all_users_filter input:hover,
+#get_all_users_filter input:focus,
+#get_all_users_filter input:active {
+    box-shadow: 0px 0px 10px -3px #000;
+}
+
+.wp-core-ui select:focus,
+.wp-core-ui select:hover {
+    color: #000;
+    outline: none !important;
+    box-shadow: 0px 0px 10px -3px #000;
+}
+
+.btn_add_new a{
+    text-decoration: none;
+    color: #fafafa;
+}
+
+.btn_add_new a:focus,
+.btn_add_new a:active{
+    outline: none;
+    box-shadow: none;
+}
+
+.checkAll{
+    margin-left: 0px !important;
+}
+
+table.dataTable.display tbody tr {
+    background: #fff !important;
+}
+
+table.dataTable.display tbody tr.odd>.sorting_1,
+table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
+    background: #fff !important;
+}
+
+table.dataTable.display tbody tr.even>.sorting_1,
+table.dataTable.order-column.stripe tbody tr.even>.sorting_1 {
+    background: #fff !important;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    padding: 4px 25px 4px 10px !important;
+    border-radius: 10px !important;
+    border: none !important;
+    background-color: #fff !important;
+    box-shadow: 0px 0px 5px -3px #000;
+}
+
+.dataTables_wrapper .dataTables_length select:hover {
+    box-shadow: 0px 0px 10px -3px #000;
+}
+
+.action_btn{
+    padding: 10px 18px !important;
+}
+
+.btn-column-filter{
+    padding: 8px 10px !important;
+}
+
+.date_filter label{
+    margin-top: 5px !important;
+}
+
+.date_filter input{
+    padding: 4px 6px !important;
+    margin-left: 4px !important;
+}
+
+.btnsearch {
+   width: 27%;
+}
+
+.wp-core-ui select {
+    padding: 8px 25px 8px 10px !important;
+    border-radius: 10px !important;
+    border: none !important;
+    background-color: #fff !important;
+    box-shadow: 0px 0px 5px -3px #000;
+}
+
+.list {
+    list-style: none outside none;
+    margin: 10px 0 30px;
+}
+
+.item {
+    width: 474px;
+    padding: 10px 10px;
+    margin: 5px 0;
+    border: 2px solid #444;
+    border-radius: 5px;
+    background-color:#fafafa;
+
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: start;
+    cursor: move;
+}
+
+.myHandle {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    vertical-align: middle;
+    background-color: #000;
+    /* cursor: move; */
+}
+
+.container{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+/***  Extra ***/
+
+body {
+    font-family: Verdana, 'Trebuchet ms', Tahoma;
+}
+
+.logList {
+    margin-top: 20px;
+    width: 250px;
+    min-height: 200px;
+    padding: 5px 15px;
+    border: 5px solid #000;
+    border-radius: 15px;
+}
+
+.logList:before {
+    content: 'log';
+    padding: 0 5px;
+    position: relative;
+    top: -1.1em;
+    background-color: #FFF;
+}
+
+
+.container {
+    width: 600px;
+    margin: auto;
+}
+
+h2 {
+    text-align: center;
+}
+
+.floatleft {
+    float: left;
+}
+
+.floatleft ul{
+    padding-left: 0px;
+}
+.bms-modal{
+    padding: 0px !important;
+}
+
+.clear {
+    clear: both;
+}
+
+
+.wp-core-ui select:hover {
+    box-shadow: 0px 0px 10px -3px #000;
+}
+
+.action_btn {
+    padding: 9.4px 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px -3px #000;
+    border: none;
+    background: #fff;
+}
+
+.action_btn:hover {
+    box-shadow: 0px 0px 10px -3px #000;
+}
+
+.dataTables_wrapper .dataTables_length {
+    position: absolute;
+    bottom: 0;
+}
+.dropdown_list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: start;
+    align-items: center;
+    gap: 50px;
+}
+.buttons-group{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.wrap {
+    position: relative;
+}
+
+#get_all_users_length label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+#newButton{
+    margin-top: 33px !important;
+    padding: 8px 12px !important;
+}
+.dataTables_filter{
+    float: left !important;
+}
+.dataTables_wrapper .dataTables_info {
+    margin-left: 200px;
+}
+
+#get_all_users {
+    margin: 20px auto !important;
+    overflow: hidden;
+    width: auto;
+    background: #fafafa;
+    border-radius: 10px;
+    padding: 10px 0;
+    border: none;
+    box-shadow: 0px 0px 5px -3px #000;
+}
+
+table.dataTable thead th {
+    border: none !important;
+    padding: 15px 10px !important;
+}
+
+table.dataTable {
+    border-collapse: collapse !important;
+}
+
+#get_all_users tbody {
+    box-shadow: 0px 0px 5px -3px #000;
+    border-right: 0;
+    border-left: 0;
+}
+
+.fa-trash:before {
+    color: #f81111;
+}
+
+.fa-edit:before,
+.fa-pen-to-square:before {
+    color: #000;
+    font-weight: 300;
+}
+
+.dt-center div {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #fff !important;
+    border: none !important;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px -3px #000;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000 !important;
+}
+
+table.dataTable thead .sorting_asc input {
+    margin: 0 !important;
+}
+
+table.dataTable input:focus-visible,
+table.dataTable input:focus {
+    box-shadow: none !important;
+    outline: none;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    box-shadow: 0px 0px 10px -3px #000 !important;
+    background: #fff !important;
+    border: none !important;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px -3px #000;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000 !important;
+}
+
+input[type=checkbox]:checked::before {
+    content: url('../images/check-image.png');
+    margin: 0;
+    width: fit-content;
+    height: fit-content;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 10px;
+    color: #000 !important;
+}
+
+#wpwrap {
+    background: #fff;
+}
+
+.dataTables_paginate,
+.dataTables_paginate span {
+    display: inline-flex;
+    gap: 5px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:focus,
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+    box-shadow: none !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 10px;
+}
+#form_data,
+.send_mail_data{
+    display: flex;
+    justify-content: center;
+}
+
+.main #form_data .form-contant {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 500px;
+}
+
+.main .send_mail_data .send_mail_form_contant{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 550px;
+}
+
+#wpcontent {
+    padding: 20px;
+}
+
+.main #form_data .form-contant .firstAndLastName,
+.main .send_mail_data .send_mail_form_contant .subjectAndemailfrom {
+    display: grid;
+    grid-template-columns: 49% 49%;
+    justify-content: space-between;
+}
+
+.main #form_data .form-contant div{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: stretch;
+    font-weight: 500;
+}
+
+.main .send_mail_data .send_mail_form_contant div {
+    flex-direction: column;
+    /* gap: 5px; */
+    align-items: stretch;
+    font-weight: 500;
+}
+
+.main .send_mail_data .send_mail_form_contant .emailfrom{
+    display: flex;
+}
+
+.main #form_data .form-contant div h1,
+.main .send_mail_data div h1 {
+    background: #0d6efd;
+    color: #fff;
+    text-transform: capitalize;
+    padding: 15px 0;
+    text-align: center;
+    margin: 0;
+}
+
+.main #form_data .form-contant .firstAndLastName #fname,
+.main #form_data .form-contant .firstAndLastName #lname,
+.main #form_data .form-contant #email,
+.main #form_data .form-contant #mob{
+    margin: 0px;
+    background: #fff;
+    border-radius: 10px;
+    border: none !important;
+    outline: none !important;
+    padding: 5px 10px;
+    box-shadow: 0px 0px 5px -3px #000;
+}
+
+.main .send_mail_data .send_mail_form_contant .subjectAndemailfrom .mail_sub,
+.main .send_mail_data .send_mail_form_contant .subjectAndemailfrom .mail_from,
+.main .send_mail_data .send_mail_form_contant .emailfrom .admin_mail{
+    margin: 0px;
+    background: #fff;
+    border-radius: 10px;
+    border: none !important;
+    outline: none !important;
+    padding: 6px 37px;
+    box-shadow: 0px 0px 5px -3px #000; 
+}
+
+.main #form_data .form-contant div button {
+    padding: 10px;
+    margin: 10px 0 0 0;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    width: 50%;
+}
+
+.div .send_mail_data .send_mail_form_contant .emailfrom{
+    display: flex;
+}
+
+.dash-main .second_column .btn_users a,
+.dash-main .second_column .btn_adduser a,
+.dash-main .second_column .btn_sendmail a{
+    color: #fff;
+    text-decoration: none;
+} 
+
+.dash-main .second_column .all_buttons {
+    margin-top: 35px !important;
+    margin-left: 50px !important;
+}
+
+.dash-main .second_column .btn_users a:focus,
+.dash-main .second_column .btn_adduser a:focus,
+.dash-main .second_column .btn_sendmail a:focus{
+    box-shadow: none !important;
+}
+
+.dash-main .first_column{
+    display: flex;
+    justify-content: space-around;
+    gap: 0px;
+    width: 100%;
+}
+
+.dash-main .first_column .total_user{
+    width: 30%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dash-main .first_column .user_graph{
+    width: 100%;
+    padding: 30px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+}
+
+
+.dash-main .second_column .all_buttons{
+
+}
+
+.main #form_data .form-contant div label{
+    font-size: 16px;
+    color: #635c5c;
+    margin-left: 5px;
+    margin-bottom: 6px;
+}
+
+.main .send_mail_data .send_mail_form_contant div label{
+    font-size: 16px;
+    color: #635c5c;
+    margin-left: 5px;
+    margin-bottom: 15px;
+}
+
+.main #form_data .form-contant div .error {
+    font-size: 13px;
+    font-weight: 500;
+    color: #f81111;
+}
+
+@media screen and (max-width: 767px) {
+    .main #form_data .form-contant .firstAndLastName{
+        display: block;
+    }
+    .firstAndLastName .lname{
+        margin-top: 15px;
+    }
+    .main .send_mail_data .send_mail_form_contant h1{
+        font-size: 35px;
+    }
+    .dropdown_list {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: start !important;
+        align-items: center;
+        gap: 20px;
+    }
+    .dropdown_list form{
+        width: 100%;
+    }
+    .date_filter{
+        width: 100%;
+    }
+    .dataTables_wrapper{
+        overflow: scroll;
+    }
+    .dataTables_wrapper .dataTables_length{
+        display: none !important;
+    }
+    .dataTables_wrapper .dataTables_info{
+        margin: auto;
+    }
+    a.btn.btn-primary.btn-column-filter,#get_all_users_filter {
+        display: none;
+    }
+    .main .send_mail_data .send_mail_form_contant{
+        width: 100%;
+    }
+    .main #form_data .form-contant .firstAndLastName, .main .send_mail_data .send_mail_form_contant .subjectAndemailfrom{
+        grid-template-columns: 100%;
+    }
+    .main .send_mail_data .send_mail_form_contant div input{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 600px){
+#wpbody {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+}
