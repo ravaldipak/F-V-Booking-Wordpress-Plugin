@@ -8,9 +8,14 @@ class FVTPWBase
 {
     public function __construct()
     {
-        add_action('init', [$this, 'fvtpw_custom_post_type_registration']);
-        add_action('init', [$this, 'register_custom_post_status']);
+       
         add_action('wp_enqueue_scripts', [$this, "fvtpw_car_park_booking_enqueue_scripts"]);
+        add_action('init', [$this,'fvtpw_custom_post_type_registration']);
+        add_action('init', [$this,'register_custom_post_status']);
+        add_action('admin_menu', [$this,'fv_booking_register_settings']);
+        add_action('admin_init', [$this,'fvtpw_register_settings']);
+        
+        add_action( 'wp_enqueue_scripts', [$this,"fvtpw_car_park_booking_enqueue_scripts"] );
 
         add_action('admin_enqueue_scripts', [$this, "fvtpw_car_park_booking_enqueue_scripts"]);
 
@@ -153,7 +158,8 @@ class FVTPWBase
                 // Send email to booking user
                 $user_email = get_post_meta($post_id, 'email', true);
                 $subject = 'Booking Approved';
-                $message = "Your booking has been approved.\n\n";
+                $message = get_option('approve_booking_message', 'Your booking has been approved.');
+                $message = str_replace('{{status}}', 'Approved', $message);
                 $headers = 'From: ' . get_option('admin_email') . '\r\n';
                 wp_mail($user_email, $subject, $message, $headers);
             }
@@ -175,9 +181,11 @@ class FVTPWBase
 
                 // Send email to booking user
                 $subject = 'Booking Denied';
-                $message = "Your booking has been denied.\n\n";
+                $message = get_option('deny_booking_message', 'Your booking has been denied.');
+                $message = str_replace('{{status}}', 'Denied', $message);
                 $headers = 'From: ' . get_option('admin_email') . '\r\n';
                 wp_mail($user_email, $subject, $message, $headers);
+                wp_delete_post($post_id, true);
             }
         }
         wp_redirect(admin_url('edit.php?post_type=fv_booking'));
@@ -200,7 +208,8 @@ class FVTPWBase
         // Send email to booking user
         $user_email = get_post_meta($post_id, 'email', true);
         $subject = 'Booking Completed';
-        $message = "Your booking has been completed.\n\n";
+        $message = get_option('complete_booking_message', 'Your booking has been completed.');
+        $message = str_replace('{{status}}', 'Completed', $message);
         $headers = 'From: ' . get_option('admin_email') . '\r\n';
         wp_mail($user_email, $subject, $message, $headers);
 
@@ -208,6 +217,7 @@ class FVTPWBase
         wp_redirect(admin_url('edit.php?post_type=fv_booking'));
         exit;
     }
+    
 
     public function fvtpw_booking_meta_box()
     {
@@ -472,18 +482,19 @@ class FVTPWBase
                 update_post_meta($post_id, 'notes', $notes);
 
                 // Send email to admin
+                // Get the new booking message from options
+                $new_booking_message = get_option('fvtpw_settings')['new_booking_message'];
+
+                // Replace placeholders with actual values
+                $message = str_replace(
+                    array('{{name}}', '{{email}}', '{{phone}}', '{{start_date}}', '{{start_time}}', '{{exit_date}}', '{{exit_time}}', '{{slot}}', '{{notes}}'),
+                    array($name, $email, $phone, $start_date, $start_time, $exit_date, $exit_time, $slot, $notes),
+                    $new_booking_message
+                );
+
+                // Send email to admin
                 $admin_email = get_option('admin_email');
                 $subject = 'New Car Park Booking';
-                $message = "A new car park booking has been made.\n\n";
-                $message .= "Name: $name\n";
-                $message .= "Email: $email\n";
-                $message .= "Phone: $phone\n";
-                $message .= "Start Date: $start_date\n";
-                $message .= "Start Time: $start_time\n";
-                $message .= "Exit Date: $exit_date\n";
-                $message .= "Exit Time: $exit_time\n";
-                $message .= "Slot: $slot\n";
-                $message .= "Notes: $notes\n";
                 $headers = 'From: ' . $email . '\r\n';
 
                 wp_mail($admin_email, $subject, $message, $headers);
